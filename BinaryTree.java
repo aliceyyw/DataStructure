@@ -15,14 +15,15 @@ public class BinaryTree {
     public void BinaryTree(){
 
     }
+
     public static TreeNode sampleTree(){
         TreeNode root  = new TreeNode(0);
         root.left = new TreeNode(1);
-        root.right = new TreeNode(2);
-        root.left.left = new TreeNode(3);
-        root.left.right = new TreeNode(4);
-        root.right.left = new TreeNode(5);
-        root.right.right = new TreeNode(6);
+        root.right = new TreeNode(1);
+        root.left.left = new TreeNode(2);
+        root.left.right = new TreeNode(2);
+        //root.right.left = new TreeNode(2);
+        //root.right.right = new TreeNode(2);
         return root;
     }
 
@@ -52,10 +53,10 @@ public class BinaryTree {
             }
             parentNum--;
             level.add(temp.val);
-            //System.out.print(temp.val+" ");
+            System.out.print(temp.val+" ");
             if(parentNum==0){
                 curLevel++;
-                //System.out.println();
+                System.out.println();
                 parentNum=childNum;
                 childNum=0;
                 result.addFirst(level);
@@ -63,8 +64,20 @@ public class BinaryTree {
             }
 
         }
-
         return result;
+    }
+    //leetcode_101 whether a binarytree is the mirror to itself
+    public static boolean isSymmetric(TreeNode root){
+        if(root==null) return true;
+        return mutualSymmetric(root.left,root.right);
+
+    }
+    private static boolean mutualSymmetric(TreeNode x, TreeNode y){
+        if(x==null&&y==null)
+            return true;
+        if(x==null||y==null)
+            return false;
+        return ((mutualSymmetric(x.left,y.right))&&(mutualSymmetric(x.right,y.left))&&(x.val==y.val));
     }
 
 }

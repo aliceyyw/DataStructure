@@ -5,14 +5,10 @@ package datastructure;
  */
 public class LinkedList {
 
-    // node data structure
-    public class ListNode{
-        int val;
-        ListNode next;
-        public ListNode(int x){val =x;}
-    }
 
     private ListNode head;
+    public ListNode getHead() {return head;}
+
     //构造方法
     public LinkedList(int[] init){
         if(init.length==0) head=null;
@@ -41,6 +37,57 @@ public class LinkedList {
                 p.next=p.next.next;
             else{
                 p=p.next;
+            }
+        }
+        return head;
+    }
+    // non-recursive way to merge sorted linkedlists
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2){
+        if(l1==null&&l2==null)
+            return null;
+        else if(l1==null)
+            return l2;
+        else if(l2==null)
+            return l1;
+
+        ListNode head=null;
+        ListNode p1 =l1;
+        ListNode p2 = l2;
+        ListNode insert=null;
+
+        if(l1.val<=l2.val){
+            head = l1;
+            p1=p1.next;
+            insert=head;
+        }
+        else if(l1.val>l2.val){
+            head=l2;
+            p2=p2.next;
+            insert=head;
+        }
+        while(p1!=null&&p2!=null){
+            if(p1.val<p2.val){
+                insert.next=p1;
+                insert=insert.next;
+                p1=p1.next;
+            }else if(p1.val>=p2.val){
+                insert.next=p2;
+                insert=insert.next;
+                p2=p2.next;
+            }
+        }
+        if(p1==null&&p2!=null){
+            while(p2!=null){
+                insert.next=p2;
+                insert=insert.next;
+                p2=p2.next;
+            }
+        }
+        else if(p1!=null&&p2==null){
+            while(p1!=null){
+                insert.next=p1;
+                insert = insert.next;
+                p1=p1.next;
             }
         }
         return head;
