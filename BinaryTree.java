@@ -34,6 +34,8 @@ public class BinaryTree {
             printTree(root.right);
         }
     }
+
+    //leetcode_107   level order traverse and in reversed output
     public static List<List<Integer>> levelOrderBottom(TreeNode root){
         LinkedList<List<Integer>> result = new java.util.LinkedList<List<Integer>>();
         if(root==null) return result;
@@ -78,6 +80,23 @@ public class BinaryTree {
         if(x==null||y==null)
             return false;
         return ((mutualSymmetric(x.left,y.right))&&(mutualSymmetric(x.right,y.left))&&(x.val==y.val));
+    }
+
+    //leetcode_110  Balanced Binary Tree
+    // the depth of the two subtrees of every node never differ by more than 1
+    public boolean isBalanced(TreeNode root){
+        if(root==null) return true;
+        if(Math.abs(getDepth(root.left)-getDepth(root.right))>1)
+            return false;
+        else
+            return (isBalanced(root.left)&&isBalanced(root.right));
+
+    }
+
+    // the depth of a node in the binary tree
+    public int getDepth(TreeNode root){
+        if(root==null) return 0;
+        return Math.max(getDepth(root.left),getDepth(root.right))+1;
     }
 
 }
