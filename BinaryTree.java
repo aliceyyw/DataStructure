@@ -18,12 +18,12 @@ public class BinaryTree {
 
     public static TreeNode sampleTree(){
         TreeNode root  = new TreeNode(0);
-        root.left = new TreeNode(1);
-        root.right = new TreeNode(1);
-        root.left.left = new TreeNode(2);
-        root.left.right = new TreeNode(2);
-        //root.right.left = new TreeNode(2);
-        //root.right.right = new TreeNode(2);
+        root.left = new TreeNode(3);
+        root.right = new TreeNode(5);
+        root.left.left = new TreeNode(11);
+        root.left.right = new TreeNode(12);
+        root.right.left = new TreeNode(18);
+        root.right.right = new TreeNode(17);
         return root;
     }
 
@@ -97,6 +97,55 @@ public class BinaryTree {
     public int getDepth(TreeNode root){
         if(root==null) return 0;
         return Math.max(getDepth(root.left),getDepth(root.right))+1;
+    }
+
+    //leetcode_257 return all path (from root to leaves) in a binary tree
+    // DFS +recursive
+    public List<String> binaryTreePathsDFS(TreeNode root){
+        ArrayList<String> result = new ArrayList<String>();
+        if(root==null) return result;   //empty list
+        if(root.left==null && root.right ==null){   //leaf only add itself
+            result.add(Integer.toString(root.val));
+        }
+        if(root.left!=null){
+            for(String subpath : binaryTreePathsDFS(root.left)){
+                result.add(Integer.toString(root.val)+"->"+subpath);
+            }
+        }
+        if(root.right!=null){
+            for(String subpathr : binaryTreePathsDFS(root.right)){
+                result.add(Integer.toString(root.val)+"->"+subpathr);
+            }
+        }
+        return result;
+    }
+    //leetcode_257
+    // BFS + queue
+    public List<String> binaryTreePathsBFS(TreeNode root){
+        List<String> result = new ArrayList<String>();
+        LinkedList<TreeNode> nqueue = new LinkedList<TreeNode>();
+        LinkedList<String> strqueue = new LinkedList<String>();
+        if(root==null)
+            return result;
+        nqueue.add(root);
+        strqueue.add("");
+        while(!nqueue.isEmpty()){
+            TreeNode temp = nqueue.remove();
+            String subpath = strqueue.remove();
+            if(temp.left==null&&temp.right==null){
+                result.add(subpath+Integer.toString(temp.val));  //leaf
+            }
+            if(temp.left!=null){
+                nqueue.add(temp.left);
+                strqueue.add(subpath+Integer.toString(temp.val)+"->");
+            }
+            if(temp.right!=null){
+                nqueue.add(temp.right);
+                strqueue.add(subpath+Integer.toString(temp.val)+"->");
+            }
+
+        }
+        return result;
     }
 
 }
