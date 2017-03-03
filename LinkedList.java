@@ -93,5 +93,21 @@ public class LinkedList {
         return head;
     }
 
-
+    //leetcode_141 determine if the given linkedlist has a cycle
+    public static boolean hasCycle(ListNode head){
+        if(head==null) return false;
+        ListNode less = head;
+        ListNode  more = head.next;
+        while(less!=null&more!=null){
+            if(less==more)
+                return true;
+            less=less.next;
+            more=more.next;
+            if(more==null)
+                break;
+            else
+                more=more.next;
+        }
+        return false;
+    }
 }
