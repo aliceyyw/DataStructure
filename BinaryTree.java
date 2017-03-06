@@ -148,4 +148,45 @@ public class BinaryTree {
         return result;
     }
 
+    //leetcode112 Path Sum
+    //whether exists a path has certain sum value
+    public boolean hasPathSum(TreeNode root, int sum){
+        if(root==null) return false;
+        if(root.val==sum&&root.left==null&&root.right==null)
+            return true;
+        return (hasPathSum(root.left,sum-root.val))||(hasPathSum(root.right,sum-root.val));
+
+    }
+    //leetcode437 Path Sum III
+    //The path does not need to start or end at the root or a leaf,return the total number of paths
+    public int pathSum(TreeNode root, int sum){
+        if(root==null)
+            return 0;
+        return pathSumFrom(root,sum)+pathSumFrom(root.left,sum)+pathSumFrom(root.right,sum);
+
+    }
+    private int pathSumFrom(TreeNode root, int sum){
+        if(root==null)
+            return 0;
+        int res = pathSumFrom(root.left,sum-root.val)+pathSumFrom(root.right,sum-root.val);
+        if(root.val==sum)
+            return res+1;
+        else
+            return res;
+    }
+
+    //leetcode111 minimum depth of binary tree
+    public int minDepth(TreeNode root){
+        if(root==null)
+            return 0;
+        if(root.left==null&&root.right==null)
+            return 1;
+        if(root.left==null){
+            return minDepth(root.right)+1;
+        }if(root.right==null){
+            return minDepth(root.left)+1;
+        }
+        return Math.min(minDepth(root.left),minDepth(root.right))+1;
+    }
+
 }
