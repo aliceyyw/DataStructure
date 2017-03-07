@@ -1,5 +1,7 @@
 package datastructure;
 
+import java.util.List;
+
 /**
  * Created by wyy on 2/24/17.
  */
@@ -9,8 +11,9 @@ public class LinkedList {
     private ListNode head;
     public ListNode getHead() {return head;}
 
-    //构造方法
-    public LinkedList(int[] init){
+
+    public static ListNode initLinkedList(int[] init){
+        ListNode head;
         if(init.length==0) head=null;
         head = new ListNode(init[0]);
         ListNode pre = head;
@@ -19,8 +22,19 @@ public class LinkedList {
             pre.next=now;
             pre=now;
         }
+        pre.next=null;
+        return head;
     }
+
     public void printList(){
+        ListNode p = head;
+        while(p!=null){
+            System.out.print(p.val+" ");
+            p=p.next;
+        }
+    }
+
+    public static void print(ListNode head){
         ListNode p = head;
         while(p!=null){
             System.out.print(p.val+" ");
@@ -109,5 +123,39 @@ public class LinkedList {
                 more=more.next;
         }
         return false;
+    }
+
+    //leetcode_234 whethere a linked list is palindrome
+    public static boolean isPalindrome(ListNode head){
+        if(head==null) return true;
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast.next!=null&&fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        // the list after slow should be reversed ,then compare with that from head
+        ListNode palind = reverseList(slow.next);
+        ListNode q = head;
+        while(palind!=null){
+            if(palind.val!=q.val)
+            return false;
+            palind = palind.next;
+            q=q.next;
+        }
+    return true;
+    }
+    // reverse a linked list and return the new head
+    public static ListNode reverseList(ListNode head){
+        ListNode cur,next;
+        ListNode pre = null;
+        cur = head;
+        while(cur!=null){
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
     }
 }
