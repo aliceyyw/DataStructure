@@ -13,6 +13,7 @@ public class LinkedList {
 
 
     public static ListNode initLinkedList(int[] init){
+        if(init.length==0) return null;
         ListNode head;
         if(init.length==0) head=null;
         head = new ListNode(init[0]);
@@ -157,5 +158,31 @@ public class LinkedList {
             cur = next;
         }
         return pre;
+    }
+
+    //leetcode_203 remove all elements with given value in a linkedlist
+    public static ListNode removeElements(ListNode head, int val){
+        ListNode cur = head,pre = null,res=null;
+        while(cur!=null){
+            if(cur.val==val) {
+                if(pre==null){
+                    cur = cur.next;
+                    continue;
+                }
+                pre.next = cur.next;
+                cur = pre.next;
+            }else{
+                if(pre==null){
+                    pre=cur;
+                    res=cur;
+                    cur=cur.next;
+                    continue;
+                }
+
+                cur = cur.next;
+                pre = pre.next;
+            }
+        }
+        return res;
     }
 }
