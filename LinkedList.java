@@ -185,4 +185,41 @@ public class LinkedList {
         }
         return res;
     }
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB){
+        if(headA==null||headB==null)
+            return null;
+        int lena = getLength(headA);
+        int lenb = getLength(headB);
+        ListNode trya = headA, tryb=headB;
+        if(lena>lenb){
+            while(lena!=lenb){
+                trya=trya.next;
+                lena--;
+            }
+        }
+        if(lenb>lena){
+            while(lenb!=lena){
+                tryb=tryb.next;
+                lenb--;
+            }
+        }
+        while(trya!=null&&tryb!=null){
+            if(trya==tryb)
+                return trya;
+            trya = trya.next;
+            tryb = tryb.next;
+        }
+        return null;
+
+    }
+    // get the length of a linkedlist
+    public int getLength(ListNode head){
+        ListNode p = head;
+        int count = 0;
+        while(p!=null){
+            p=p.next;
+            count++;
+        }
+        return count;
+    }
 }
