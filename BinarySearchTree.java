@@ -1,10 +1,7 @@
 package datastructure;
 import datastructure.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by wyy on 2/23/17.
@@ -120,5 +117,39 @@ public class BinarySearchTree {
         }
         return false;
     }
+    //leetcode_98
+    //root.val > maximum in left subtree && root.val < minimum in right subtree
+    public boolean isValidBST(TreeNode root){
+        java.util.Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode p =root;   //to traverse
+        TreeNode pre = null;
+        while(root!=null||!stack.isEmpty()){
+            while(p!=null){
+                stack.push(p);
+                p=p.left;
+            }
+            TreeNode temp = stack.pop();
+            if(pre!=null&&pre.val>=p.val){
+                return false;
+            }
+            pre = temp;
+            p = temp.right;
 
+        }
+        return true;
+    }
+
+    //leetcode_98 recursive way to determine BST
+    public boolean isValidBST_r(TreeNode root){
+        return isValid(root,null,null);
+    }
+
+    private boolean isValid(TreeNode root, Integer min, Integer max){
+        if(root==null) return true;
+        if(min!=null && root.val<=min)
+            return false;
+        if(max!=null && root.val>=max)
+            return false;
+        return isValid(root.left,min,root.val) && isValid(root.right,root.val,max);
+    }
 }
