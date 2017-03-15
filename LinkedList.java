@@ -1,6 +1,4 @@
-package datastructure;
-
-import java.util.List;
+package structure;
 
 /**
  * Created by wyy on 2/24/17.

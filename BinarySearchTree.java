@@ -1,5 +1,4 @@
-package datastructure;
-import datastructure.TreeNode;
+package structure;
 
 import java.util.*;
 

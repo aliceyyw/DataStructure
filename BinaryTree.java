@@ -1,8 +1,5 @@
-package datastructure;
+package structure;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.*;
 import java.util.LinkedList;
 
@@ -183,6 +180,53 @@ public class BinaryTree {
             return Math.max(minDepth(root.left),minDepth(root.right))+1;
         }
         return Math.min(minDepth(root.left),minDepth(root.right))+1;
+    }
+
+    //leetcode_124 Binary Tree Maximum Path Sum
+    private int max;
+    public int maxPathSum(TreeNode root) {
+        if(root==null) return 0;
+        max = root.val;
+        dfs(root);
+        return max;
+
+    }
+    private int dfs(TreeNode root){
+        if(root==null)  return 0;
+        if(root.left==null && root.right==null){
+            if(root.val>max)
+                max=root.val;
+            return root.val;
+        }
+        if(root.left==null){
+            int rightsum = dfs(root.right);
+            int result = (rightsum>0)?root.val+rightsum:root.val;
+            max=Math.max(max,result);
+            return result;
+        }
+        if(root.right==null){
+            int leftsum = dfs(root.left);
+            int res = (leftsum>0)?root.val+leftsum:root.val;
+            max = Math.max(max,res);
+            return res;
+        }
+        // else has both left and right child, choose the larger side
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        int childSum = Math.max(left,right);
+
+        if(left<0 && right<0){
+            max = Math.max(max,root.val);
+            return root.val;
+        }
+        if(left<0 || right<0){   //the bigger one > 0
+            max = Math.max(max,childSum+root.val);
+            return childSum+root.val;
+        }
+        // both > 0
+        max = Math.max(max,root.val+left+right);
+        return childSum+root.val;
+
     }
 
 }
